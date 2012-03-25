@@ -8,7 +8,7 @@ env.shell = '/bin/bash -c'
 def build_platform(site, profile, webserver, dbserver, makefile, build):
   print "===> Building the platform..."
   run("drush make %s /var/aegir/platforms/%s" % (makefile, build))
-  run("drush --root='/var/aegir/platforms/%s' provision-save '@platform_%s' --web_server='@server_%s' --context_type='platform' --debug" % (build, build, webserver))
+  run("drush --root=/var/aegir/platforms/%s provision-save @platform_%s --web_server=@server_%s --context_type=platform --debug" % (build, build, webserver))
   run("drush @hostmaster hosting-import '@platform_%s'" % build)
   run("drush @hostmaster hosting-dispatch")
 
@@ -30,7 +30,7 @@ def migrate_site(site, profile, webserver, dbserver, makefile, build):
 # Save the Drush alias to reflect the new platform
 def save_alias(site, profile, webserver, dbserver, makefile, build):
   print "===> Updating the Drush alias for this site"
-  run("drush provision-save @%s --context_type='site' --uri='%s' --platform='@platform_%s' --web_server='@server_%s' --db_server='@server_%s' --profile='%s' --debug" % (site, site, build, webserver, dbserver, profile))
+  run("drush provision-save @%s --context_type=site --uri=%s --platform=@platform_%s --web_server=@server_%s --db_server=@server_%s --profile=%s --debug" % (site, site, build, webserver, dbserver, profile))
 
 # Import a site into the frontend, so that Aegir learns the site is now on the new platform
 def import_site(site, profile, webserver, dbserver, makefile, build):
